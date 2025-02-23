@@ -227,21 +227,23 @@ Vous pourrez trouver une liste des syscalls Linux sur un système x86_64 ici :
 🌞 Utiliser `objdump` sur la commande `ls`
 
 - afficher le contenu de la section `.text`
-
+```ps
   [cauchemar@vbox ~]$ objdump -d /usr/bin/ls -j .text
+  ```
 
 - mettre en évidence quelques lignes qui contiennent l'instruction `call`
-
+```ps
   [cauchemar@vbox ~]$ objdump -d /usr/bin/ls -j .text | grep call  
   4d51:       e8 da f9 ff ff          callq  4730 <abort@plt>  
   4d56:       e8 d5 f9 ff ff          callq  4730 <abort@plt>  
   4d5b:       e8 d0 f9 ff ff          callq  4730 <abort@plt>  
-  4d60:       e8 cb f9 ff ff          callq  4730 <abort@plt>  
-  ...  
+  4d60:       e8 cb f9 ff ff          callq  4730 <abort@plt>
+  ...
+  ```
 
 - mettre en évidence quelques lignes qui contiennent l'instruction `syscall`  
   (il n’y en a aucune normalement : `ls` ne contient pas directement de syscalls, car il importe la Glibc qui contient des syscalls et les appelle avec `call`)
-
+```ps
   [cauchemar@vbox ~]$ objdump -d /usr/sbin/ip -j .text | grep syscall  
   65ca4:       e8 27 96 fa ff          callq  f2d0 <syscall@plt>  
   77a88:       e8 43 78 f9 ff          callq  f2d0 <syscall@plt>  
@@ -254,16 +256,18 @@ Vous pourrez trouver une liste des syscalls Linux sur un système x86_64 ici :
   79502:       e8 c9 5d f9 ff          callq  f2d0 <syscall@plt>  
   7bc76:       e8 55 36 f9 ff          callq  f2d0 <syscall@plt>  
   896da:       e8 f1 5b f8 ff          callq  f2d0 <syscall@plt>
+  ```
 
 🌞 Utiliser `objdump` sur la librairie Glibc
 
 - Vous avez repéré son chemin exact au point d'avant avec `ldd`.  
 - Mettre en évidence quelques lignes qui contiennent l'instruction `syscall` (il devrait y en avoir pas mal). Chaque ligne contenant l'instruction `syscall` est la dernière d'un bloc de code qui est le syscall lui-même.
-
+```ps
   [cauchemar@vbox ~]$ objdump -d /lib64/libc.so.6 -j .text | grep syscall
+  ```
 
 - Trouver l'instruction `syscall` qui exécute le syscall `close()`
-
+```ps
   [cauchemar@vbox ~]$ objdump -d /lib64/libc.so.6 -j .text | grep -B 4 syscall  
   --  
   127cb6:       66 2e 0f 1f 84 00 00    nopw   %cs:0x0(%rax,%rax,1)  
@@ -271,5 +275,5 @@ Vous pourrez trouver une liste des syscalls Linux sur un système x86_64 ici :
   127cc0:       8b 3b                   mov    (%rbx),%edi  
   127cc2:       b8 03 00 00 00          mov    $0x3,%eax  
   127cc7:       0f 05                   syscall
-
+```
 Suite --> [Partie 2](./part2.md)
