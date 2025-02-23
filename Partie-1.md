@@ -41,21 +41,21 @@ Dans cette partie, on va voir quelques outils très usuels pour obtenir des info
   /usr/bin/ls: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=1afdd52081d4b8b631f2986e26e69e0b275e159c, for GNU/Linux 3.2.0, stripped
 ```
 - la commande `ip`
-
+```ps
   [cauchemar@vbox ~]$ file /usr/sbin/ip  
   /sbin/ip: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=77a2f5899f0529f27d87bb29c6b84c535739e1c7, for GNU/Linux 3.2.0, stripped
-
+```
 - un fichier `.mp3` que vous aurez téléchargé sur le disque de la VM
-
+```ps
   [cauchemar@vbox ~]$ file timeless.mp3  
   timeless.mp3: Audio file with ID3 version 2.4.0, contains:MPEG ADTS, layer III, v1, 192 kbps, 44.1 kHz, Stereo
-
+```
 ### B. `readelf`
 
 🌞 Utiliser `readelf` sur le programme `ls`
 
 - afficher le header du programme
-
+```ps
   [cauchemar@vbox ~]$ readelf -h /usr/bin/ls  
   ELF Header:  
   Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00  
@@ -77,6 +77,7 @@ Dans cette partie, on va voir quelques outils très usuels pour obtenir des info
   Size of section headers:           64 (bytes)  
   Number of section headers:         30  
   Section header string table index: 29
+```
 
 - afficher la liste des sections du programme
 
