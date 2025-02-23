@@ -80,7 +80,8 @@ Dans cette partie, on va voir quelques outils très usuels pour obtenir des info
 ```
 
 - afficher la liste des sections du programme
-
+  
+```ps
   [cauchemar@vbox ~]$ readelf -S /usr/bin/ls  
   There are 30 section headers, starting at offset 0x21f18:
 
@@ -146,7 +147,9 @@ Dans cette partie, on va voir quelques outils très usuels pour obtenir des info
   [28] .gnu_debugdata    PROGBITS         0000000000000000  00021298  
        0000000000000b58  0000000000000000           0     0     1  
   [29] .shstrtab         STRTAB           0000000000000000  00021df0  
-       0000000000000128  0000000000000000           0     0     1  
+       0000000000000128  0000000000000000           0     0     1
+
+```
 
 Key to Flags:  
 W (write), A (alloc), X (execute), M (merge), S (strings), I (info),  
@@ -155,9 +158,10 @@ C (compressed), x (unknown), o (OS specific), E (exclude),
 l (large), p (processor specific)
 
 - déterminer à quelle adresse commence le code du programme
-
+```ps
   [cauchemar@vbox ~]$ readelf -S /usr/bin/ls | grep .text  
-  [15] .text             PROGBITS         0000000000004d50  00004d50  
+  [15] .text             PROGBITS         0000000000004d50  00004d50
+```
 
 Donc : 0000000000004d50
 
@@ -168,7 +172,7 @@ On peut utiliser `ldd` notamment pour visualiser de quelle librairie a besoin un
 🌞 Utiliser `ldd` sur le programme `ls`
 
 - afficher la liste des librairies que va utiliser `ls` pendant son fonctionnement
-
+```ps
   [cauchemar@vbox ~]$ ldd /usr/bin/ls  
   linux-vdso.so.1 (0x00007ffc64d67000)  
   libselinux.so.1 => /lib64/libselinux.so.1 (0x00007f2b63e13000)  
@@ -176,11 +180,13 @@ On peut utiliser `ldd` notamment pour visualiser de quelle librairie a besoin un
   libc.so.6 => /lib64/libc.so.6 (0x00007f2b63c00000)  
   libpcre2-8.so.0 => /lib64/libpcre2-8.so.0 (0x00007f2b63b64000)  
   /lib64/ld-linux-x86-64.so.2 (0x00007f2b63e6a000)
+```
 
 - déterminer, parmi ces librairies, laquelle est la Glibc
-
+```ps
   [cauchemar@vbox ~]$ ldd /usr/bin/ls | grep libc  
   libc.so.6 => /lib64/libc.so.6 (0x00007f8d7c600000)
+```
 
 ## 2. Syscalls basics
 
@@ -191,23 +197,29 @@ Vous pourrez trouver une liste des syscalls Linux sur un système x86_64 ici :
 
 🌞 Donner le nom ET l'identifiant unique d'un syscall qui permet à un processus de...
 
-- **lire un fichier stocké sur disque**  
+- **lire un fichier stocké sur disque**
+```ps
   %rax : 0  
   Name : read  
   Manual : read(2)  
   Entry point : sys_read
+```
 
-- **écrire dans un fichier stocké sur disque**  
+- **écrire dans un fichier stocké sur disque**
+```ps
   %rax : 1  
   Name : write  
   Manual : write(2)  
   Entry point : sys_write
+```
 
-- **lancer un nouveau processus**  
+- **lancer un nouveau processus**
+```ps
   %rax : 59  
   Name : execve  
   Manual : execve(2)  
   Entry point : sys_execve
+```
 
 ### B. `objdump`
 
