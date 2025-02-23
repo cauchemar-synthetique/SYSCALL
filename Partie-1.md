@@ -149,13 +149,12 @@ Dans cette partie, on va voir quelques outils très usuels pour obtenir des info
   [29] .shstrtab         STRTAB           0000000000000000  00021df0  
        0000000000000128  0000000000000000           0     0     1
 
-```
-
 Key to Flags:  
 W (write), A (alloc), X (execute), M (merge), S (strings), I (info),  
 L (link order), O (extra OS processing required), G (group), T (TLS),  
 C (compressed), x (unknown), o (OS specific), E (exclude),  
 l (large), p (processor specific)
+```
 
 - déterminer à quelle adresse commence le code du programme
 ```ps
