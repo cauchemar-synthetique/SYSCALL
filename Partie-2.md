@@ -24,7 +24,7 @@ $ strace echo bjr
 - faites `ls` sur un dossier qui contient des trucs
 - mettez en évidence le *syscall* pour écrire dans le terminal le résultat du `ls`
 ```ps
-[cauchemar@vbox ~]$ strace ls /home/dums
+[cauchemar@vbox ~]$ strace ls /home/cauchemar
 write(1, "timeless.mp3\nwget-log\n", 22) = 22
 ```
 
