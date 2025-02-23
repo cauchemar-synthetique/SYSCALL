@@ -36,10 +36,10 @@ Dans cette partie, on va voir quelques outils très usuels pour obtenir des info
 🌞 Utiliser `file` pour déterminer le type de :
 
 - la commande `ls`
-
+```ps
   [cauchemar@vbox ~]$ file /usr/bin/ls  
   /usr/bin/ls: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=1afdd52081d4b8b631f2986e26e69e0b275e159c, for GNU/Linux 3.2.0, stripped
-
+```
 - la commande `ip`
 
   [cauchemar@vbox ~]$ file /usr/sbin/ip  
