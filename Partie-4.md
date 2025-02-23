@@ -114,7 +114,7 @@ root         680  0.0  0.4  10892  8576 ?        Ss   23:30   0:00 /usr/bin/pyth
 ```
 ```ps
 [cauchemar@vbox ~]$ ps aux | grep calculatrice
-dums        1302  0.0  0.1   6408  2304 pts/0    S+   23:36   0:00 grep --color=auto calculatrice
+cauchemar        1302  0.0  0.1   6408  2304 pts/0    S+   23:36   0:00 grep --color=auto calculatrice
 ```
 
 🌞 **Créer l'utilisateur `calculatrice`**
