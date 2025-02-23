@@ -24,7 +24,7 @@ $ strace echo bjr
 - faites `ls` sur un dossier qui contient des trucs
 - mettez en évidence le *syscall* pour écrire dans le terminal le résultat du `ls`
 ```ps
-[dums@vbox ~]$ strace ls /home/dums
+[cauchemar@vbox ~]$ strace ls /home/dums
 write(1, "timeless.mp3\nwget-log\n", 22) = 22
 ```
 
@@ -34,9 +34,9 @@ write(1, "timeless.mp3\nwget-log\n", 22) = 22
 - mettez en évidence le *syscall* qui demande l'ouverture du fichier en lecture
 - mettez en évidence le *syscall* qui écrit le contenu du fichier dans le terminal
 ```ps
-[dums@vbox ~]$ strace cat coucou
+[cauchemar@vbox ~]$ strace cat coucou
 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
-write(1, "coucou\n", 10coucou
+write(1, "bonjour\n", 10bonjour
 )             = 10
 ```
 
@@ -45,7 +45,7 @@ write(1, "coucou\n", 10coucou
 - vous devez utiliser une option de `strace`
 - elle affiche juste un tableau qui liste tous les *syscalls*  appelés par la commande tracée, et combien de fois ils ont été appelé
 ```ps
-[dums@vbox ~]$ strace -c curl example.org
+[cauchemar@vbox ~]$ strace -c curl example.org
 
 ... 
 
@@ -106,12 +106,12 @@ write(1, "coucou\n", 10coucou
 > Vous pouvez isoler à la main les lignes intéressantes : copier/coller de la commande, et des seule(s) ligne(s) que je vous demande de repérer.
 
 ```ps
-[dums@vbox ~]$ sudo sysdig proc.name=ls
+[cauchemar@vbox ~]$ sudo sysdig proc.name=ls
 
-[dums@vbox ~]$ ls music/
+[cauchemar@vbox ~]$ ls music/
 timeless.mp3
 
-1869 15:20:51.484447348 0 ls (3398.3398) < write res=85 data=coucou  .[0m.[01;31msysdig-0.39.0-x86_64.rpm.[0m  .[01;36mtimeless.mp3.[0m  wget
+1869 15:20:51.484447348 0 ls (3398.3398) < write res=85 data=bonjour  .[0m.[01;31msysdig-0.39.0-x86_64.rpm.[0m  .[01;36mtimeless.mp3.[0m  wget
 ```
 
 🌞 **Utiliser `sysdig` pour tracer les *syscalls*  effectués par `cat`**
@@ -119,15 +119,15 @@ timeless.mp3
 - faites `cat` sur un fichier qui contient des trucs
 - mettez en évidence le *syscall* qui demande l'ouverture du fichier en lecture
 ```ps
-957 15:28:26.677105306 0 cat (3425.3425) > openat dirfd=-100(AT_FDCWD) name=/etc/ld.so.cache flags=4097(O_RDONLY|O_CLOEXEC) mode=0
+957 17:31:11.677105306 0 cat (3425.3425) > openat dirfd=-100(AT_FDCWD) name=/etc/ld.so.cache flags=4097(O_RDONLY|O_CLOEXEC) mode=0
 
-958 15:28:26.677119262 0 cat (3425.3425) < openat fd=3(<f>/etc/ld.so.cache) dirfd=-100(AT_FDCWD) name=/etc/ld.so.cache flags=4097(O_RDONLY|O_CLOEXEC) mode=0 dev=FD00 ino=132200
+958 17:31:11.677119262 0 cat (3425.3425) < openat fd=3(<f>/etc/ld.so.cache) dirfd=-100(AT_FDCWD) name=/etc/ld.so.cache flags=4097(O_RDONLY|O_CLOEXEC) mode=0 dev=FD00 ino=132200
 ```
 - mettez en évidence le *syscall* qui écrit le contenu du fichier dans le terminal
 ```ps
-1179 15:28:26.678229540 0 cat (3425.3425) > write fd=1(<f>/dev/pts/1) size=7
+1179 18:28:26.678229540 0 cat (3425.3425) > write fd=1(<f>/dev/pts/1) size=7
 
-1202 15:28:26.679834989 0 cat (3425.3425) < write res=7 data=coucou.
+1202 18:28:26.679834989 0 cat (3425.3425) < write res=7 data=bonjour.
 ```
 
 
@@ -148,7 +148,7 @@ sudo sysdig "user.uid=$(id -u)"
 - **capturez les *syscalls*  effectués par un `curl example.org`**
 
 ```ps
-[dums@vbox ~]$ sudo sysdig -w curl.scap proc.name=curl
+[cauchemar@vbox ~]$ sudo sysdig -w curl.scap proc.name=curl
 ```
 
 Suite --> [Fichier curl.scap](./curl.scap)
